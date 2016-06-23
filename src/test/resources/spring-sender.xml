@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="spring-common.xml"/>
+
+    <!-- 默认的目的地队列定义 -->
+    <bean id="activeMQQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="queue-test"/>
+    </bean>
+
+    <!-- JmsTemplate 定义 -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultDestination" ref="activeMQQueue"/>
+    </bean>
+
+    <!-- 消息发送者定义 -->
+    <bean id="messageSender" class="com.caobug.demo.springjmsactivemq.MessageSender">
+        <constructor-arg index="0" ref="jmsTemplate"/>
+    </bean>
+</beans>

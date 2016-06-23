@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="spring-common.xml"/>
+
+    <!-- 消息接收者定义 -->
+    <bean id="messageReceiver" class="com.caobug.demo.springjmsactivemq.MessageReceiver"/>
+
+    <bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destinationName" value="queue-test"/>
+        <property name="messageListener" ref="messageReceiver"/>
+    </bean>
+</beans>
